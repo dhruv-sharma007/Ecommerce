@@ -1,5 +1,6 @@
 import express from "express";
 import verifyJwt from "../Middlewares/Auth.Middleware.js"
+import verifySeller from "../Middlewares/Seller.Middleware.js"
 
 import {
 	registerUser,
@@ -10,7 +11,6 @@ import {
 	updateProfile,
 	logoutUser,
 } from "../Controller/User.Controller.js";
-import verifySeller from "../Middlewares/Seller.Middleware.js"
 
 const router = express.Router();
 

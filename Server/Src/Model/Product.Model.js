@@ -11,12 +11,13 @@ const productSchema = new mongoose.Schema({
     },
     seller: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: Category,
-        required: true
+        type: String,
+        enum: ["vehicals", "cloths", "elctronics"],
+        required: true,
     },
     description: {
         type: String,

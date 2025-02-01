@@ -5,12 +5,13 @@ import jwt from "jsonwebtoken"
 const verifySeller = asyncHandler(async(req, res, next)=>{
     const accessToken = req.cookies?.accessToken
 
-    if(accessToken){
+    if(!accessToken){
         throw new ApiError(401, "You are not authorized!")
     }
     const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN)
-    const { role } = decodedToken
-    if (role === "Seller"){
+
+    if (decodedToken.role === "Seller"){
+        req.user = decodedToken
         next()
     }
     else{

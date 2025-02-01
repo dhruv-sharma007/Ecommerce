@@ -75,7 +75,6 @@ const loginUser = asyncHandler(async (req, res) => {
 	}
 
 	const isPasswordValid = await user.isPasswordCorrect(password);
-	console.log(isPasswordValid);
 
 	if (!isPasswordValid) {
 		throw new ApiError(404, "Invalid Password");
@@ -88,7 +87,6 @@ const loginUser = asyncHandler(async (req, res) => {
 	const loggedInUser = await User.findById(user._id).select(
 		" -password -refreshToken"
 	);
-	console.log(loggedInUser)
 
 	res
 		.status(200)
@@ -108,7 +106,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
 	const incomingrefreshToken =
 		req.cookies.refreshToken || req.body.refreshToken;
-	console.log(incomingrefreshToken);
 	if (!incomingrefreshToken) {
 		throw new ApiError(400, "Unauthorized request");
 	}
@@ -142,7 +139,6 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 	if ([oldPassword, newPassword].some((field) => field?.trim === "")) {
 		throw new ApiError(400, "Both password field are required");
 	}
-	console.log("user", req.user?._id);
 	const user = await User.findById(req.user?._id);
 
 	if (!user) {

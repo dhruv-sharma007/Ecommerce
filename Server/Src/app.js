@@ -17,8 +17,10 @@ app.use(cors({
 
 //Routes Import
 import userRoute from "./Route/User.Route.js"
+import productRoute from  "./Route/Poduct.Route.js"
 
 //Route Declaration
 app.use("/api/v1/user", userRoute)
+app.use("/api/v1/product", productRoute)
 
 export default app
