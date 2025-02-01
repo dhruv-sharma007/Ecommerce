@@ -1,9 +1,12 @@
 import ImageKit from "imagekit";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 let imagekit = new ImageKit({
-	publicKey: "public_8s+MM9KN3Wqmh6XUE58DzCou7zw=",
-	privateKey: "private_H1oDsr+Vs/ax8efABlibHKCWawk=",
-	urlEndpoint: "https://ik.imagekit.io/dhruvs/ycom-product-image",
+	publicKey: process.env.IMAGINARY_PUBLIC_KEY,
+	privateKey: process.env.IMAGINARY_PRIVET_KEY,
+	urlEndpoint: process.env.IMAGINARY_PRODUCT_IMAGE_URL_ENDPOINT,
 });
 
 const uploadProductImage = async (file) => {

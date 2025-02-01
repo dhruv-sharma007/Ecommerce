@@ -34,4 +34,21 @@ const addProduct = asyncHandler(async (req, res) => {
 	res.status(400).json( new ApiError(400, "Error"))
 });
 
+const updateProduct = asyncHandler(async(req, res)=>{
+	const { name, price, category, description } = req.body;
+	
+	if (!name && !price && !category && !description) {
+		throw new ApiError(403, "All fields are required");
+	}
+
+	const updateField = {}
+	if (name) updateField.name = name;
+	if (price) updateField.price = price;
+	if (category) updateField.category = category;
+	if (description) updateField.description = description;
+
+	await Product.findByIdAndUpdate(req.user_id)  //TO BE CONTINUE
+
+})
+
 export { addProduct };

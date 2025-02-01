@@ -1,6 +1,5 @@
 import express from "express";
 import verifyJwt from "../Middlewares/Auth.Middleware.js"
-import verifySeller from "../Middlewares/Seller.Middleware.js"
 
 import {
 	registerUser,
