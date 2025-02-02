@@ -47,8 +47,13 @@ const updateProduct = asyncHandler(async(req, res)=>{
 	if (category) updateField.category = category;
 	if (description) updateField.description = description;
 
-	await Product.findByIdAndUpdate(req.user_id)  //TO BE CONTINUE
+	const seller = req.user?._id
 
+	await Product.findByIdAndUpdate({seller}, { $set: updateField },{ new: true })  
+
+	res
+	.status(200)
+	.json(new ApiResponse(200, {}, "Product updated successfully"))
 })
 
 export { addProduct };

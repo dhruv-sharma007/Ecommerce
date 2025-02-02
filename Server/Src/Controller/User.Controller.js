@@ -178,7 +178,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 
 	res
 		.status(200)
-		.json(new ApiResponse(200, user, "Profile Updated Successfully"));
+		.json(new ApiResponse(200, user, {} ,"Profile Updated Successfully"));
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
