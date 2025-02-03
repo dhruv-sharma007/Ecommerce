@@ -9,6 +9,8 @@ import {
 	changeCurrentPassword,
 	updateProfile,
 	logoutUser,
+	addToWishlist,
+	removeWhishList
 } from "../Controller/User.Controller.js";
 
 const router = express.Router();
@@ -20,5 +22,7 @@ router.route("/current-user").get(verifyJwt, getCurrentUser);
 router.route("/change-password").patch(verifyJwt, changeCurrentPassword);
 router.route("/update-profile").patch(verifyJwt, updateProfile);
 router.route("/logout").post(verifyJwt, logoutUser);
+router.route("/add-wish").post(verifyJwt, addToWishlist);
+router.route("/remove-wish").post(verifyJwt, removeWhishList);
 
 export default router;

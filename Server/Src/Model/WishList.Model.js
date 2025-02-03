@@ -16,8 +16,8 @@ const wishListSchema = new mongoose.Schema({
 	],
 });
 
-const wishList = mongoose.model("WishList", wishListSchema)
+const WishList = mongoose.model("WishList", wishListSchema)
 
 export{
-    wishList
+    WishList
 }

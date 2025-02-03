@@ -1,9 +1,13 @@
+import mongoose from "mongoose"
+import WishList from "../Model/WishList.Model.js"
 import { User } from "../Model/User.Model.js";
+import Product from "../Model/Product.Model.js"
+
 import asyncHandler from "../Utils/AsyncHandler.js";
-import ApiError from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
-import jwt from "jsonwebtoken";
+import ApiError from "../Utils/ApiError.js";
 import { grCheck } from "grom-utils"
+import jwt from "jsonwebtoken";
 
 const options = {
 	httpOnly: true,
@@ -194,6 +198,44 @@ const logoutUser = asyncHandler(async (req, res) => {
 		.json(new ApiResponse(200, {}, "User logged out successfully"));
 });
 
+const addToWishlist = asyncHandler(async (req, res) => {
+    const { productId } = req.body;
+    const userId = req.user._id;
+
+    const product = await Product.findById(productId);
+    if (!product) {
+        res.status(404);
+        throw new Error("Product not found");
+    }
+
+    const wishlist = await WishList.findOneAndUpdate(
+        { user: userId },
+        { $addToSet: { items: productId } },
+        { new: true, upsert: true }
+    );
+
+    res.status(200).json(new ApiResponse(200, wishlist, "Product added in whishlist"));
+});
+
+const removeWhishList = asyncHandler(async(req, res)=>{
+	const { productId } = req.body;
+    const userId = req.user._id;
+
+    const product = await Product.findById(productId);
+    if (!product) {
+        res.status(404);
+        throw new Error("Product not found");
+    }
+
+    const wishlist = await WishList.findOneAndUpdate(
+        { user: userId },
+        { $pull: { items: productId } },
+        { new: true }
+    );
+
+    res.status(200).json(new ApiResponse(200, wishlist, "Product removed in whishlist"));
+});
+
 export {
 	registerUser,
 	loginUser,
@@ -202,4 +244,6 @@ export {
 	changeCurrentPassword,
 	updateProfile,
 	logoutUser,
+	addToWishlist,
+	removeWhishList
 };
