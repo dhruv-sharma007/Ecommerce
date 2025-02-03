@@ -4,7 +4,7 @@ import ApiError from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import asyncHandler from "../Utils/AsyncHandler.js";
 import mongoose from "mongoose";
-import check from "../Utils/Check.js"
+import { grCheck } from "grom-utils"
 
 const addProduct = asyncHandler(async (req, res) => {
 	const { name, price, category, description } = req.body;
@@ -98,11 +98,11 @@ const updateProductImage = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
 	const { _id } = req.body;
 
-	check(mongoose.Types.ObjectId.isValid(_id), 400, "Invalid product ID")
+	grCheck(mongoose.Types.ObjectId.isValid(_id), 400, "Invalid product ID")
 
 	const deleteProduct = await Product.findByIdAndDelete(_id, )
 
-	check(deleteProduct, 404, "Product not found")
+	grCheck(deleteProduct, 404, "Product not found")
 
 	res
 	.status(200)

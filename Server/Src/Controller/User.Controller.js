@@ -3,6 +3,7 @@ import asyncHandler from "../Utils/AsyncHandler.js";
 import ApiError from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import { grCheck } from "grom-utils"
 
 const options = {
 	httpOnly: true,
@@ -70,9 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 	const user = await User.findOne({ email });
 
-	if (!user) {
-		throw new ApiError(404, "User Not Found");
-	}
+	grCheck(user, 404, "User not found")
 
 	const isPasswordValid = await user.isPasswordCorrect(password);
 
