@@ -110,6 +110,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 });
 
+const getProducts = asyncHandler(async (req, res) => {
+	const products = await Product.find({});
+	res.status(200).json(new ApiResponse(200, products, "Products found"));
+})
+
 export { 
 	addProduct, 
 	updateProduct, 
