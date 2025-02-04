@@ -126,7 +126,7 @@ const getProductById = asyncHandler(async (req, res) => {
 	res.status(200).json(new ApiResponse(200, product, "Product found"));
 });
 
-const fgetProductByName = asyncHandler(async (req, res) => {
+const getProductByName = asyncHandler(async (req, res) => {
 	const { productName } = req.params;
 	const product = await Product.findOne({ name: productName });
 
