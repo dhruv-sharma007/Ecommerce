@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
-import WishList from "../Model/WishList.Model.js"
+import { WishList } from "../Model/WishList.Model.js"
 import { User } from "../Model/User.Model.js";
-import Product from "../Model/Product.Model.js"
+import { Product} from "../Model/Product.Model.js"
 
 import asyncHandler from "../Utils/AsyncHandler.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
@@ -10,8 +10,8 @@ import { grCheck } from "grom-utils"
 import jwt from "jsonwebtoken";
 
 const options = {
-	httpOnly: true,
-	secure: true,
+	httpOnly: false,
+	secure: false,
 	samesite: "Strict",
 };
 

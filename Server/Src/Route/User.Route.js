@@ -27,7 +27,7 @@ import {
 	getShippingAddress,
 	removeShippingAddress,
 	updateShippingAddress,
-} from "../Controller/ShippingAddress.Controller.js";
+} from "../Controller/ShippingAdd.Controller.js";
 
 const router = express.Router();
 
