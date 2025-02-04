@@ -17,9 +17,11 @@ const OrderSchema = new mongoose.Schema({
 			"Confirmed",
 			"Shipped",
 			"Delivered",
+			"Out for delivery",
 			"Cancelled",
 			"Returned",
 		],
+		default: "Pending",
 	},
 	items: [
 		{
@@ -34,6 +36,11 @@ const OrderSchema = new mongoose.Schema({
 			},
 		},
 	],
+	shippingAddress: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "ShippingAddress",
+		required: true,
+	},
 }, { timestamps: true });
 
 const Order = mongoose.model("Order", OrderSchema)

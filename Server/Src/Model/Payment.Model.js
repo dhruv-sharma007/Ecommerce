@@ -20,6 +20,7 @@ const PaymentSchema = new mongoose.Schema(
 			type: String,
 			enum: ["Paid", "Pending"],
 			required: true,
+			default: "Pending",
 		},
 	},
 	{ timestamps: { createdAt: true, updatedAt: false } }
