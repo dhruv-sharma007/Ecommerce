@@ -4,7 +4,7 @@ import ApiError from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import asyncHandler from "../Utils/AsyncHandler.js";
 import mongoose from "mongoose";
-import { grCheck } from "grom-utils"
+import { grCheck } from "grom-utils";
 
 const addProduct = asyncHandler(async (req, res) => {
 	const { name, price, category, description } = req.body;
@@ -39,7 +39,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 	const { name, price, category, description, _id } = req.body;
 
 	if (!name && !price && !category && !description) {
-		throw new ApiError(403, "All fields are required");
+		throw new ApiError(400, "Atleast one field is required to update");
 	}
 
 	const updateField = {};
@@ -98,26 +98,72 @@ const updateProductImage = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
 	const { _id } = req.body;
 
-	grCheck(mongoose.Types.ObjectId.isValid(_id), 400, "Invalid product ID")
+	grCheck(mongoose.Types.ObjectId.isValid(_id), 400, "Invalid product ID");
 
-	const deleteProduct = await Product.findByIdAndDelete(_id, )
+	const deleteProduct = await Product.findByIdAndDelete(_id);
 
-	grCheck(deleteProduct, 404, "Product not found")
+	grCheck(deleteProduct, 404, "Product not found");
 
 	res
-	.status(200)
-	.json(new ApiResponse(200, deleteProduct, "Product deletef successfully"))
-
+		.status(200)
+		.json(new ApiResponse(200, deleteProduct, "Product deletef successfully"));
 });
 
-const getProducts = asyncHandler(async (req, res) => {
+const getAllProducts = asyncHandler(async (req, res) => {
 	const products = await Product.find({});
 	res.status(200).json(new ApiResponse(200, products, "Products found"));
-})
+});
 
-export { 
-	addProduct, 
-	updateProduct, 
+const getProductById = asyncHandler(async (req, res) => {
+	const { _id } = req.params;
+	grCheck(mongoose.Types.ObjectId.isValid(_id), 400, "Invalid product ID");
+
+	const product = await Product.findById(_id);
+	if (!product) {
+		throw new ApiError(404, "Product not found");
+	}
+
+	res.status(200).json(new ApiResponse(200, product, "Product found"));
+});
+
+const fgetProductByName = asyncHandler(async (req, res) => {
+	const { productName } = req.params;
+	const product = await Product.findOne({ name: productName });
+
+	if (!product) {
+		throw new ApiError(404, "Product not found");
+	}
+
+	res.status(200).json(new ApiResponse(200, product, "Product found"));
+});
+
+const getProductByCategory = asyncHandler(async (req, res) => {
+	const { category } = req.params;
+	const products = await Product.find({ category });
+	if (!products) {
+		throw new ApiError(404, "Product not found");
+	}
+	res.status(200).json(new ApiResponse(200, products, "Products found"));
+});
+
+const getProductBySeller = asyncHandler(async (req, res) => {
+	const { sellerId } = req.params;
+	const products = await Product.find({ seller: sellerId });
+
+	if (!products) {
+		throw new ApiError(404, "Product not found");
+	}
+	res.status(200).json(new ApiResponse(200, products, "Products found"));
+});
+
+export {
+	addProduct,
+	updateProduct,
 	updateProductImage,
 	deleteProduct,
+	getAllProducts,
+	getProductById,
+	getProductByName,
+	getProductByCategory,
+	getProductBySeller,
 };
