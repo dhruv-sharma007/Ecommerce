@@ -1,11 +1,1 @@
 @import "tailwindcss";
-@plugin "daisyui";
-
-body {
-  @apply bg-white text-black;
-  
-}
-:root, [data-theme] {
-    background-color: var(--root-bg, oklch(1 0 0));
-    color: var(--color-base-content);
-}
